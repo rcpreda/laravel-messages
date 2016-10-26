@@ -9,7 +9,7 @@
                     <table class="table table-bordered">
                         @if($messages)
                             @foreach($messages as $message)
-                                <tr @if($message->unread) class="success" @endif>
+                                <tr @if($message->is_unread) class="success" @endif>
                                     <td>{{$message->name}} ({{$message->email}})</td>
                                     <td>{{$message->created_at}}</td>
                                     <td style="width: 5%">
