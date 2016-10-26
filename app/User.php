@@ -5,10 +5,11 @@ use Auth;
 use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Cmgmyr\Messenger\Traits\Messagable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Messagable;
 
     /**
      * The attributes that are mass assignable.

@@ -39,11 +39,7 @@ inner join messages as m on (m.id = md.message_id)
 inner join users as u on (u.id = IF(md.user_id = m.sender_id, m.sender_id, m.receiver_id))
 where md1.id is null
 and (m.sender_id = '.Auth::id().' or m.receiver_id = '.Auth::id().')
-and
-case
-		WHEN m.receiver_id = '.Auth::id().' then md.user_id = m.receiver_id
-		WHEN m.sender_id  = '.Auth::id().' then md.user_id = m.sender_id
-	end
+
 order by md.message_id desc'));
     }
 
