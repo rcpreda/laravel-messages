@@ -35,7 +35,7 @@ end as unread,
 md.message_id
 from message_details as md
 left  join `message_details` as `md1` on (`md`.`message_id` = `md1`.`message_id` and md1.id > md.id )
-inner join messages as m on (m.id = md.message_id)
+inner join message_data as m on (m.id = md.message_id)
 inner join users as u on (u.id = IF(md.user_id = m.sender_id, m.sender_id, m.receiver_id))
 where md1.id is null
 and (m.sender_id = '.Auth::id().' or m.receiver_id = '.Auth::id().')
@@ -50,7 +50,7 @@ order by md.message_id desc'));
     public function getMessagesById($id)
     {
         return DB::table('message_details')
-            ->join('messages as m','m.id', '=', 'message_details.message_id')
+            ->join('message_data as m','m.id', '=', 'message_details.message_id')
             ->join('users as u ','u.id', '=', DB::raw('if(message_details.user_id = m.sender_id, m.receiver_id, m.sender_id)'))
             ->select(DB::raw('if(message_details.user_id = m.sender_id, m.receiver_id, m.sender_id) as receiver'), 'u.email', 'message_details.id', 'message_details.user_id', 'message_details.message_id', 'message_details.subject', 'message_details.body', 'message_details.is_unread', 'm.sender_id', 'm.receiver_id')
             ->where('message_details.message_id', '=', $id)->get();
